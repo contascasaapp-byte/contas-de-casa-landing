@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contas de Casa — Divida as contas sem briga</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --azul: #1a2e4a;
+    --azul-medio: #1e3d6e;
+    --azul-claro: #2563a8;
+    --verde: #22c55e;
+    --verde-claro: #dcfce7;
+    --branco: #ffffff;
+    --cinza-claro: #f8fafc;
+    --cinza: #94a3b8;
+    --texto: #1e293b;
+    --texto-sec: #475569;
+  }
+
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    color: var(--texto);
+    background: var(--branco);
+    line-height: 1.6;
+  }
+
+  /* HERO */
+  .hero {
+    background: var(--azul);
+    color: white;
+    padding: 3rem 1.5rem 4rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(37,99,168,0.4) 0%, transparent 70%);
+    top: -100px; right: -100px;
+    border-radius: 50%;
+  }
+
+  .logo-icon {
+    font-size: 3.5rem;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .badge {
+    display: inline-block;
+    background: rgba(34,197,94,0.2);
+    color: #86efac;
+    border: 1px solid rgba(34,197,94,0.3);
+    padding: 0.3rem 1rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero h1 {
+    font-size: clamp(1.8rem, 5vw, 3rem);
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero h1 span {
+    color: #60a5fa;
+  }
+
+  .hero p {
+    font-size: 1.1rem;
+    color: #cbd5e1;
+    max-width: 480px;
+    margin: 0 auto 2rem;
+  }
+
+  .btn-principal {
+    display: inline-block;
+    background: var(--verde);
+    color: white;
+    font-weight: 700;
+    font-size: 1.1rem;
+    padding: 1rem 2.5rem;
+    border-radius: 999px;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 20px rgba(34,197,94,0.4);
+  }
+
+  .btn-principal:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(34,197,94,0.5);
+  }
+
+  .trial-info {
+    margin-top: 1rem;
+    font-size: 0.85rem;
+    color: #94a3b8;
+  }
+
+  /* PROBLEMA */
+  .problema {
+    background: #fef9f0;
+    padding: 3rem 1.5rem;
+    text-align: center;
+    border-bottom: 1px solid #fde68a;
+  }
+
+  .emoji-grande { font-size: 2.5rem; }
+
+  .problema h2 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin: 0.75rem 0 0.5rem;
+    color: #92400e;
+  }
+
+  .problema p {
+    color: #78350f;
+    max-width: 400px;
+    margin: 0 auto;
+    font-size: 1rem;
+  }
+
+  /* COMO FUNCIONA */
+  .como {
+    padding: 4rem 1.5rem;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .secao-titulo {
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 2.5rem;
+    color: var(--azul);
+  }
+
+  .passos {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .passo {
+    display: flex;
+    gap: 1.25rem;
+    align-items: flex-start;
+  }
+
+  .passo-numero {
+    min-width: 44px;
+    height: 44px;
+    background: var(--azul);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  .passo-texto h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+    color: var(--texto);
+  }
+
+  .passo-texto p {
+    font-size: 0.95rem;
+    color: var(--texto-sec);
+  }
+
+  /* FUNCIONALIDADES */
+  .funcionalidades {
+    background: var(--cinza-claro);
+    padding: 4rem 1.5rem;
+  }
+
+  .grid-features {
+    max-width: 800px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .feature-card {
+    background: white;
+    border-radius: 16px;
+    padding: 1.5rem;
+    border: 1px solid #e2e8f0;
+  }
+
+  .feature-icon { font-size: 1.75rem; margin-bottom: 0.75rem; display: block; }
+
+  .feature-card h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+    color: var(--azul);
+  }
+
+  .feature-card p {
+    font-size: 0.88rem;
+    color: var(--texto-sec);
+    line-height: 1.5;
+  }
+
+  /* PREÇO */
+  .preco {
+    padding: 4rem 1.5rem;
+    text-align: center;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  .card-preco {
+    background: var(--azul);
+    color: white;
+    border-radius: 24px;
+    padding: 2.5rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card-preco::after {
+    content: '';
+    position: absolute;
+    width: 200px; height: 200px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 50%;
+    bottom: -60px; right: -60px;
+  }
+
+  .trial-badge {
+    display: inline-block;
+    background: var(--verde);
+    color: white;
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 0.35rem 1rem;
+    border-radius: 999px;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .preco-valor {
+    font-size: 3.5rem;
+    font-weight: 800;
+    line-height: 1;
+  }
+
+  .preco-valor span {
+    font-size: 1.2rem;
+    font-weight: 400;
+    opacity: 0.7;
+    vertical-align: super;
+  }
+
+  .preco-periodo {
+    font-size: 0.9rem;
+    opacity: 0.7;
+    margin-bottom: 1.5rem;
+  }
+
+  .preco-itens {
+    list-style: none;
+    text-align: left;
+    margin: 1.5rem 0 2rem;
+  }
+
+  .preco-itens li {
+    padding: 0.5rem 0;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .preco-itens li:last-child { border-bottom: none; }
+
+  .check { color: var(--verde); font-size: 1.1rem; }
+
+  .btn-wpp {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    background: var(--verde);
+    color: white;
+    font-weight: 700;
+    font-size: 1.05rem;
+    padding: 1rem 2rem;
+    border-radius: 999px;
+    text-decoration: none;
+    transition: transform 0.2s;
+    width: 100%;
+  }
+
+  .btn-wpp:hover { transform: scale(1.03); }
+
+  .wpp-icon { width: 22px; height: 22px; fill: white; }
+
+  /* DEPOIMENTO */
+  .depoimento {
+    background: #eff6ff;
+    padding: 3rem 1.5rem;
+    text-align: center;
+  }
+
+  .depoimento blockquote {
+    max-width: 500px;
+    margin: 0 auto;
+    font-size: 1.1rem;
+    font-style: italic;
+    color: var(--azul-medio);
+    line-height: 1.7;
+  }
+
+  .depoimento cite {
+    display: block;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    font-style: normal;
+    color: var(--cinza);
+    font-weight: 600;
+  }
+
+  /* FAQ */
+  .faq {
+    padding: 4rem 1.5rem;
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  .faq-item {
+    border-bottom: 1px solid #e2e8f0;
+    padding: 1.25rem 0;
+  }
+
+  .faq-item h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--azul);
+    margin-bottom: 0.5rem;
+  }
+
+  .faq-item p {
+    font-size: 0.92rem;
+    color: var(--texto-sec);
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--azul);
+    color: #94a3b8;
+    text-align: center;
+    padding: 2rem 1.5rem;
+    font-size: 0.85rem;
+  }
+
+  footer strong { color: white; }
+
+  @media (max-width: 480px) {
+    .hero { padding: 2.5rem 1rem 3rem; }
+    .preco-valor { font-size: 2.8rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <span class="logo-icon">🏠</span>
+  <div class="badge">✨ Novidade — v2.0.0</div>
+  <h1>Divida as contas de casa <span>sem briga</span> e sem planilha</h1>
+  <p>Cadastre as contas, marque quem pagou e acompanhe tudo pelo celular — em segundos.</p>
+  <a href="https://wa.me/5534992160329?text=Oi!+Quero+testar+o+Contas+de+Casa" class="btn-principal">
+    Quero testar grátis por 7 dias
+  </a>
+  <p class="trial-info">Sem cartão de crédito · Cancele quando quiser</p>
+</section>
+
+<!-- PROBLEMA -->
+<section class="problema">
+  <span class="emoji-grande">😤</span>
+  <h2>Cansado de cobrar todo mês quem pagou o quê?</h2>
+  <p>Energia, internet, água, aluguel… controlar tudo no WhatsApp ou numa planilha é um caos.</p>
+</section>
+
+<!-- COMO FUNCIONA -->
+<section class="como">
+  <h2 class="secao-titulo">Como funciona</h2>
+  <div class="passos">
+    <div class="passo">
+      <div class="passo-numero">1</div>
+      <div class="passo-texto">
+        <h3>Você recebe o código da sua casa</h3>
+        <p>Entre em contato pelo WhatsApp e criamos o acesso pra você na hora.</p>
+      </div>
+    </div>
+    <div class="passo">
+      <div class="passo-numero">2</div>
+      <div class="passo-texto">
+        <h3>Cadastre as contas e os moradores</h3>
+        <p>Energia, internet, água — você define quem divide o quê.</p>
+      </div>
+    </div>
+    <div class="passo">
+      <div class="passo-numero">3</div>
+      <div class="passo-texto">
+        <h3>Marque quem pagou com um toque</h3>
+        <p>O card fica verde quando pago. Todo mundo vê em tempo real.</p>
+      </div>
+    </div>
+    <div class="passo">
+      <div class="passo-numero">4</div>
+      <div class="passo-texto">
+        <h3>Acompanhe o histórico e o resumo anual</h3>
+        <p>Gráficos e relatórios por morador — saiba exatamente quem pagou mais ao longo do ano.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FUNCIONALIDADES -->
+<section class="funcionalidades">
+  <h2 class="secao-titulo">O que tem no app</h2>
+  <div class="grid-features">
+    <div class="feature-card">
+      <span class="feature-icon">📱</span>
+      <h3>Instala no celular</h3>
+      <p>Funciona como app — sem precisar acessar pelo navegador toda hora.</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">✅</span>
+      <h3>Marque pagamentos</h3>
+      <p>Toque no card e ele fica verde. Simples assim.</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">📊</span>
+      <h3>Histórico e gráficos</h3>
+      <p>Veja mês a mês quanto cada morador pagou.</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">👥</span>
+      <h3>Multimoradores</h3>
+      <p>Todo mundo acessa com seu próprio login.</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🌙</span>
+      <h3>Modo escuro</h3>
+      <p>Interface clara ou escura — do jeito que preferir.</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🔒</span>
+      <h3>Seguro e privado</h3>
+      <p>Só quem tem o código da sua casa acessa os dados.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PREÇO -->
+<section class="preco">
+  <h2 class="secao-titulo">Plano único, sem surpresa</h2>
+  <div class="card-preco">
+    <div class="trial-badge">🎁 7 dias grátis</div>
+    <div class="preco-valor"><span>R$</span>19<span>,90</span></div>
+    <p class="preco-periodo">por mês, por casa</p>
+    <ul class="preco-itens">
+      <li><span class="check">✓</span> Moradores ilimitados</li>
+      <li><span class="check">✓</span> Contas ilimitadas</li>
+      <li><span class="check">✓</span> Histórico completo</li>
+      <li><span class="check">✓</span> Atualizações incluídas</li>
+      <li><span class="check">✓</span> Suporte via WhatsApp</li>
+    </ul>
+    <a href="https://wa.me/5534992160329?text=Oi!+Quero+testar+o+Contas+de+Casa+grátis" class="btn-wpp">
+      <svg class="wpp-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+      </svg>
+      Começar agora pelo WhatsApp
+    </a>
+  </div>
+  <p style="margin-top:1rem; font-size:0.82rem; color:var(--cinza); text-align:center;">
+    Pagamento via PIX · Cobrança mensal · Sem fidelidade
+  </p>
+</section>
+
+<!-- DEPOIMENTO -->
+<section class="depoimento">
+  <blockquote>
+    "Antes a gente brigava todo mês por causa das contas. Agora todo mundo vê no app e ninguém cobra ninguém — simplesmente funciona."
+  </blockquote>
+  <cite>— Usuário do Contas de Casa, Uberlândia/MG</cite>
+</section>
+
+<!-- FAQ -->
+<section class="faq">
+  <h2 class="secao-titulo">Dúvidas frequentes</h2>
+
+  <div class="faq-item">
+    <h3>Precisa instalar algum programa?</h3>
+    <p>Não. O app funciona direto pelo navegador do celular, mas pode ser instalado como se fosse um app normal — sem precisar da Play Store.</p>
+  </div>
+
+  <div class="faq-item">
+    <h3>Quantas pessoas podem usar na mesma casa?</h3>
+    <p>Sem limite. Cada morador tem seu próprio login e acessa as mesmas contas.</p>
+  </div>
+
+  <div class="faq-item">
+    <h3>Como funciona o pagamento?</h3>
+    <p>Após os 7 dias grátis, você recebe o PIX para pagamento mensal. Simples assim.</p>
+  </div>
+
+  <div class="faq-item">
+    <h3>E se eu quiser cancelar?</h3>
+    <p>É só avisar pelo WhatsApp. Sem multa, sem burocracia.</p>
+  </div>
+
+  <div class="faq-item">
+    <h3>Funciona em iOS (iPhone) também?</h3>
+    <p>Sim! Funciona no celular Android e iPhone, qualquer navegador.</p>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section style="background: var(--azul); color: white; text-align: center; padding: 4rem 1.5rem;">
+  <h2 style="font-size: 1.8rem; font-weight: 800; margin-bottom: 1rem;">Pronto pra acabar com a confusão das contas?</h2>
+  <p style="color: #cbd5e1; margin-bottom: 2rem;">Comece grátis hoje. Sem cartão, sem complicação.</p>
+  <a href="https://wa.me/5534992160329?text=Oi!+Quero+testar+o+Contas+de+Casa" class="btn-principal">
+    Falar no WhatsApp agora
+  </a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>🏠 <strong>Contas de Casa</strong> — desenvolvido por <strong>MRQ Log</strong></p>
+  <p style="margin-top: 0.5rem;">Uberlândia, MG · contato via WhatsApp</p>
+</footer>
+
+</body>
+</html>
