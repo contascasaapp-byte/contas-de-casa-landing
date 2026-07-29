@@ -9,8 +9,17 @@
   gtag('js', new Date());
   gtag('config', 'AW-18354382674');
 
-  function registrarConversao() {
-    gtag('event', 'conversion', {'send_to': 'AW-18354382674/PyACCMLZjNgcENLOhrBE'});
+  function registrarConversao(url) {
+    var callback = function () {
+      if (typeof(url) != 'undefined') {
+        window.location = url;
+      }
+    };
+    gtag('event', 'conversion', {
+      'send_to': 'AW-18354382674/PyACCMLZjNgcENLOhrBE',
+      'event_callback': callback
+    });
+    return false;
   }
 </script>
 <meta charset="UTF-8">
